@@ -45,10 +45,6 @@ var arraySum = function(array) {
   } else if (array[0] === undefined) {
     return 0;
   }
-    //else if array[0] is an array
-    //return arraySum(array[0])
-    //else if array[0] is undefined
-    //return 0
 };
 
 // 4. Check if a number is even.
@@ -66,6 +62,14 @@ var isEven = function(n) {
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  //doesn't work with negative numbers right now. something has to fundamentally change
+  if (n < 0) {
+    return n + 1 + sumBelow(n + 1);
+  } else if (n === 0) {
+    return 0;
+  } else {
+    return n - 1 + sumBelow(n - 1);
+  }
 };
 
 // 6. Get the integers within a range (x, y).
