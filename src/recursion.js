@@ -32,27 +32,17 @@ var sum = function(array) {
   }
 };
 
-var arraySumActivations = 0;
-var numTriggers = 0;
-var arrayTriggers = 0;
-var undefinedTriggers = 0;
-
-// 1 + 2 + 3
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 //it's breaking every time it reaches the first nested array with two or more non-array items
 var arraySum = function(array) {
-  arraySumActivations++;
   //if array[0] is an integer
   if (typeof array[0] === "number") {
-    numTriggers++;
     //return array[0] + arraySum(array.slice(1))
     return array[0] + arraySum(array.slice(1));
   } else if (Array.isArray(array[0])) {
-    arrayTriggers++;
     return arraySum(array[0]) + arraySum(array.slice(1));
   } else if (array[0] === undefined) {
-    undefinedTriggers++;
     return 0;
   }
     //else if array[0] is an array
@@ -63,6 +53,13 @@ var arraySum = function(array) {
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  if (n === 0) {
+    return true;
+  } else if (Math.abs(n) > 1) {
+    return isEven(Math.abs(n) - 2);
+  } else if (Math.abs(n) === 1){
+    return false 
+  }
 };
 
 // 5. Sum all integers below a given integer.
