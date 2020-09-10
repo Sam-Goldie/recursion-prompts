@@ -85,22 +85,15 @@ var range = function(x, y) {
     return [x + 1];
   } else if (x - y === 2) {
     return [x - 1];
-  } else if (x - y < 0) {
+  } else if (x < y) {
     x++;
   } else {
     x--;
   }
-    result = [x];
-    if (range(x, y) !== {} && range(x, y) !== undefined) { 
-      if (range(x, y)[0] !== undefined) {
-        result.push(range(x, y)[0]);
-      } else {
-        return result;
-      }
-    } else {
-      return result;
-    }
-  };
+  var result = [x];
+  range(x, y).forEach(function(item) { result.push(item) })
+  return result;
+};
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
