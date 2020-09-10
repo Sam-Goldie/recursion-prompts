@@ -72,10 +72,35 @@ var sumBelow = function(n) {
   }
 };
 
+
+//current problem: the last item isn't getting added to this array
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
+
+//serious whack a mole. Why am I oscillating between "expected undefined to be an array" and "cannot read property '0' of undefined"
 var range = function(x, y) {
-};
+  if (Math.abs(x - y) <= 1) {
+    return [];
+  } else if (x - y === -2) {
+    return [x + 1];
+  } else if (x - y === 2) {
+    return [x - 1];
+  } else if (x - y < 0) {
+    x++;
+  } else {
+    x--;
+  }
+    result = [x];
+    if (range(x, y) !== {} && range(x, y) !== undefined) { 
+      if (range(x, y)[0] !== undefined) {
+        result.push(range(x, y)[0]);
+      } else {
+        return result;
+      }
+    } else {
+      return result;
+    }
+  };
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
