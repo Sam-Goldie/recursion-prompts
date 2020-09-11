@@ -286,9 +286,11 @@ var reverseArr = function(array) {
   if (array.length === 0) {
     return [];
   } else if (array.length === 1) {
-    return array[0];
+    return [array[0]];
   } else {
-    return [array[0], ]
+    var result = [array[array.length - 1]];
+    reverseArr(array.slice(0, array.length - 1)).forEach(function(item) { result.push(item); });
+    return result;
   }
 };
 
