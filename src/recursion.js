@@ -6,6 +6,18 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
+
+// var altFactorial = function(n) {
+//   if (n < 0) {
+//     return null;
+//   } else if (n <= 1) {
+//     return 1;
+//   } else {
+//     return n * altFactorial(n - 1);
+//   }
+// };
+
+
 var factorial = function(n) {
   if (n < 0) {
     return null;
@@ -19,18 +31,29 @@ var factorial = function(n) {
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
-  //set a variable equal to a .shift of array
-  var n = array[0];
-  //if that variable is undefined
-  if (n === undefined) {
-    //return 0
+  if (array.length <= 0) {
     return 0;
+  } else if (array.length === 1) {
+    return array[0];
   } else {
-    //otherwise
-    //return that variable + function(array)
-    return n + sum(array.slice(1));
+    return array[0] + sum(array.slice(1));
   }
 };
+
+
+// var sum = function(array) {
+//   //set a variable equal to a .shift of array
+//   var n = array[0];
+//   //if that variable is undefined
+//   if (n === undefined) {
+//     //return 0
+//     return 0;
+//   } else {
+//     //otherwise
+//     //return that variable + function(array)
+//     return n + sum(array.slice(1));
+//   }
+// };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
@@ -435,13 +458,67 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
+var originalN = -1;
 var nthFibo = function(n) {
+  if (n < 0) {
+    return null;
+  } else if (n === 0) {
+    return 0;
+  } else if (n === 1) {
+    return 1;
+  }
+  if (originalN < 0) {
+    originalN = n;
+  }
+  var result = [nthFibo(n - 2), nthFibo(n - 1)];
+  if (!(result[0]) && result[0] !== 0) {
+    result.shift();
+    return result;
+  }
+  if (n === originalN) {
+    originalN = -1;
+    return result[result.length - 2] + result[result.length - 1];
+  } else {
+    result.push(result[result.length - 2] + result[result.length - 1]);
+  }
 };
+
+// var capitalizeWords = function(array) {
+//   var result = [];
+//   var wasString = false;
+//   if (typeof array === 'string') {
+//     wasString = true;
+//     array = array.split('');
+//   } else {
+//     result.push(capitalizeWords(array[0]));
+//   }
+//   array.forEach(function(item) { result.push(item.toUpperCase()); } );
+//   if (wasString) {
+//     result = result.join("");
+//     return [result];
+//   } else {
+//     return result;
+//   }
+// };
 
 // 27. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(array) {
+  if (array.length === 1) {
+    return [array[0].toUpperCase()];
+  }
+  if (typeof array === 'string') {
+    return array[0].toUpperCase() + capitalizeWords(array.slice(1));
+  } else {
+    var result = [capitalizeWords(array[0])];
+    if (array.length > result.length) {
+      result.push(capitalizeWords(array.slice(1)));
+    } else {
+      result.push()
+      return result;
+    }
+  }
 };
 
 // 28. Given an array of strings, capitalize the first letter of each index.
@@ -459,6 +536,15 @@ var capitalizeFirst = function(array) {
 // };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj) {
+  var result = 0;
+  Object.values(obj).forEach(function(item) {
+    if (typeof item === "object") {
+      result += nestedEvenSum(item);
+    } else if (typeof item === "number" && item % 2 === 0) {
+      result += item;
+    }
+  });
+  return result;  
 };
 
 // 30. Flatten an array containing nested arrays.
