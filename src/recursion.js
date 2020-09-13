@@ -382,28 +382,19 @@ var rMap = function(array, callback) {
 // var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
+
 var countKeysInObj = function(obj, key) {
-  if (typeof obj !== "object") {
-    return 0;
-  }
   var result = 0;
-  var objEntries = Object.entries(obj);
-  if (objEntries[0][0] === key) {
-    result += 1 + countKeysInObj(obj[objEntries[0][0]], key);
-  } else {
-    result += countKeysInObj(obj[objEntries[0][0]], key);
-  }
-  if (objEntries.length > 1) {
-    var newObj = {};
-    objEntries.slice(1).forEach(function(item) { newObj[item[0]] = item[1]; } );
-    result += countKeysInObj(newObj, key);
-  } else {
-    if ((result)) {
-      return result;
-    } else {
-      return 0;
+  var currentKeys = Object.keys(obj);
+  currentKeys.forEach(function(item) {
+    if (item === key) {
+      result++;
     }
-  }
+    if (typeof obj[item] !== 'string') {
+      result += countKeysInObj(obj[item], key);
+    }
+  })
+  return result;
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
@@ -550,6 +541,15 @@ var nestedEvenSum = function(obj) {
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
+  if (typeof array === 'number') {
+    return array;
+  } else {
+    var result = [];
+    array.forEach(function(item) {
+      result.push(flatten(item));
+    });
+    return result;
+  }
 };
 
 // 31. Given a string, return an object containing tallies of each letter.
