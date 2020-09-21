@@ -647,7 +647,7 @@ var minimizeZeroes = function(array) {
     }
     minimizeZeroes(array.slice(1)).forEach(function(item) {
       result.push(item);
-    })
+    });
   }
   return result;
 };
@@ -657,6 +657,16 @@ var minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
+  var result = [];
+  if (array.length === 0) {
+    return result;
+  } else {
+    result.push(Math.abs(array[0]));
+    alternateSign(array.slice(1)).forEach(function(item) {
+      result.push(item * -1);
+    });
+  }
+  return result;
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
