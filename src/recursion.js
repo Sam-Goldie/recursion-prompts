@@ -620,6 +620,18 @@ var compress = function(list) {
 // itself.
 // augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
+  var result = [];
+  if (array.length === 0) {
+    return result;
+  } else {
+    var subResult = array[0];
+    subResult.push(aug);
+    result.push(subResult);
+    augmentElements(array.slice(1), aug).forEach(function(item) {
+      result.push(item);
+    })
+  }
+  return result;
 };
 
 // 34. Reduce a series of zeroes to a single 0.
