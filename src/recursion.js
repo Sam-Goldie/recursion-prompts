@@ -470,28 +470,15 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var originalN = -1;
 var nthFibo = function(n) {
   if (n < 0) {
     return null;
-  } else if (n === 0) {
-    return 0;
-  } else if (n === 1) {
-    return 1;
   }
-  if (originalN < 0) {
-    originalN = n;
-  }
-  var result = [nthFibo(n - 2), nthFibo(n - 1)];
-  if (!(result[0]) && result[0] !== 0) {
-    result.shift();
-    return result;
-  }
-  if (n === originalN) {
-    originalN = -1;
-    return result[result.length - 2] + result[result.length - 1];
-  } else {
-    result.push(result[result.length - 2] + result[result.length - 1]);
+  var result = [0, 1];
+  if (result.length < n - 1) {
+    nthFibo(n - 1).forEach(function(item) {
+
+    })
   }
 };
 
@@ -536,6 +523,17 @@ var capitalizeWords = function(array) {
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 var capitalizeFirst = function(array) {
+  var result = [];
+  if (array.length === 0) {
+    return result;
+  } else {
+    var newWord = array[0][0].toUpperCase() + array[0].slice(1);
+    result.push(newWord);
+    capitalizeFirst(array.slice(1)).forEach(function(item) {
+      result.push(item);
+    });
+  }
+  return result;
 };
 
 // 29. Return the sum of all even numbers in an object containing nested objects.
@@ -700,14 +698,40 @@ var numToText = function(str) {
 // *** EXTRA CREDIT ***
 
 // 37. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
+var tagCount = function(tag, node = $('document')) {
+  var result = 0;
+  if (node.tagName === tag) {
+    result++;
+  }
+  if (node.children.length === 0) {
+    return result;
+  } else {
+    for (let i = 0; i < node.children.length; i++) {
+      if (node.children[i] !== undefined) {
+        result += tagCount(tag, node.children[i]);
+      }
+    }
+  }
+  return result;
 };
 
 // 38. Write a function for binary search.
 // var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 // binarySearch(array, 5) // 5
 // https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
-var binarySearch = function(array, target, min, max) {
+var binarySearch = function(array, target, min = 0, max = array.length - 1) {
+  if (min > max) {
+    return null;
+  }
+  var middleIndex = Math.ceil((max - min) / 2);
+  var middleValue = array[middleIndex];
+  if (middleValue === target) {
+    return middleIndex + min; 
+  } else if (middleValue < target) {
+    return binarySearch(array, target, middleIndex + 1, max);
+  } else if (middleValue > target) {
+    return binarySearch(array, target, min, middleIndex - 1);
+  }
 };
 
 // 39. Write a merge sort function.
