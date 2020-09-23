@@ -473,32 +473,14 @@ var fibonacci = function(n) {
 var nthFibo = function(n) {
   if (n < 0) {
     return null;
-  }
-  var result = [0, 1];
-  if (result.length < n - 1) {
-    nthFibo(n - 1).forEach(function(item) {
-
-    })
+  } else if (n === 0) {
+    return 0;
+  } else if (n === 1) {
+    return 1;
+  } else {
+    return nthFibo(n - 1) + nthFibo(n - 2);
   }
 };
-
-// var capitalizeWords = function(array) {
-//   var result = [];
-//   var wasString = false;
-//   if (typeof array === 'string') {
-//     wasString = true;
-//     array = array.split('');
-//   } else {
-//     result.push(capitalizeWords(array[0]));
-//   }
-//   array.forEach(function(item) { result.push(item.toUpperCase()); } );
-//   if (wasString) {
-//     result = result.join("");
-//     return [result];
-//   } else {
-//     return result;
-//   }
-// };
 
 // 27. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
