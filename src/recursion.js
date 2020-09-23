@@ -703,18 +703,35 @@ var tagCount = function(tag, node = $('document')) {
 // var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 // binarySearch(array, 5) // 5
 // https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
+
+// var binarySearch = function(array, target, min = 0, max = array.length - 1) {
+//   if (min > max) {
+//     return null;
+//   }
+//   var middleIndex = Math.ceil((max - min) / 2);
+//   var middleValue = array[middleIndex];
+//   if (middleValue === target) {
+//     return middleIndex + min; 
+//   } else if (middleValue < target) {
+//     return binarySearch(array, target, middleIndex + 1, max);
+//   } else if (middleValue > target) {
+//     return binarySearch(array, target, min, middleIndex - 1);
+//   }
+// };
+
+//for some reason, the search is missing the target in some cases, throwing null
+
 var binarySearch = function(array, target, min = 0, max = array.length - 1) {
-  if (min > max) {
+  var currIndex = Math.floor((max - min) / 2) + min;
+  var currItem = array[currIndex];
+  if (currItem === target) {
+    return currIndex;
+  } else if (min >= max) {
     return null;
-  }
-  var middleIndex = Math.ceil((max - min) / 2);
-  var middleValue = array[middleIndex];
-  if (middleValue === target) {
-    return middleIndex + min; 
-  } else if (middleValue < target) {
-    return binarySearch(array, target, middleIndex + 1, max);
-  } else if (middleValue > target) {
-    return binarySearch(array, target, min, middleIndex - 1);
+  } else if (currItem < target) {
+    return binarySearch(array, target, currIndex + 1, max);
+  } else if (currItem > target) {
+    return binarySearch(array, target, min, currIndex - 1);
   }
 };
 
