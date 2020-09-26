@@ -704,23 +704,6 @@ var tagCount = function(tag, node = $('document')) {
 // binarySearch(array, 5) // 5
 // https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
 
-// var binarySearch = function(array, target, min = 0, max = array.length - 1) {
-//   if (min > max) {
-//     return null;
-//   }
-//   var middleIndex = Math.ceil((max - min) / 2);
-//   var middleValue = array[middleIndex];
-//   if (middleValue === target) {
-//     return middleIndex + min; 
-//   } else if (middleValue < target) {
-//     return binarySearch(array, target, middleIndex + 1, max);
-//   } else if (middleValue > target) {
-//     return binarySearch(array, target, min, middleIndex - 1);
-//   }
-// };
-
-//for some reason, the search is missing the target in some cases, throwing null
-
 var binarySearch = function(array, target, min = 0, max = array.length - 1) {
   var currIndex = Math.floor((max - min) / 2) + min;
   var currItem = array[currIndex];
@@ -735,7 +718,44 @@ var binarySearch = function(array, target, min = 0, max = array.length - 1) {
   }
 };
 
-// 39. Write a merge sort function.
+// var mergeSort = function(array) {
+//   if (array.length === 0) {
+//     return [];
+//   } else if (array.length === 1) {
+//     return array[0];
+//   } else {
+//     var sortedArray = [];
+//     var midpoint = Math.floor(array.length / 2);
+//     for (let i = midpoint; i >= 0; i--) {
+//       var oppositeIndex = array.length - i;
+//       if (array.length === 2) {
+//         if (array[0] > array[1]) {
+//           sortedArray.unshift(array[1]);
+//           sortedArray.push(array[0]);
+//         } else {
+//           sortedArray.unshift(array[0]);
+//           sortedArray.push(array[1]);
+//         }
+//       } else if (array[i] > array[oppositeIndex]) {
+//         sortedArray.unshift(array[oppositeIndex]);
+//         sortedArray.push(array[i]);
+//       } else {
+//         sortedArray.unshift(array[i]);
+//         sortedArray.push(array[oppositeIndex]);
+//       }
+//     }
+//     var result = [];
+//     mergeSort(sortedArray.slice(0, midpoint + 1)).forEach(function(item) {
+//       result.push(item);
+//     });
+//     mergeSort(sortedArray.slice(midpoint + 1)).forEach(function(item) {
+//       result.push(item);
+//     });
+//   }
+//   return result;
+// };
+
+// 39. Write a merge sort function. UNDEFINED IS SHOWING UP IN THE ARRAYS I'M MAKING
 // mergeSort([34,7,23,32,5,62]) // [5,7,23,32,34,62]
 // https://www.khanacademy.org/computing/computer-science/algorithms/merge-sort/a/divide-and-conquer-algorithms
 var mergeSort = function(array) {
@@ -747,4 +767,26 @@ var mergeSort = function(array) {
 // console.log(obj2); // {a:1,b:{bb:{bbb:2}},c:3}
 // obj1 === obj2 // false
 var clone = function(input) {
+  if (Array.isArray(input)) {
+    var result = [];
+    for (let i = 0; i < input.length; i++) {
+      if (typeof input[i] === 'object') {
+        result.push(clone(input[i]));
+      } else {
+        result.push(input[i]);
+      }
+    }
+  } else {
+    var result = {};
+    var keys = Object.keys(input);
+    var values = Object.values(input);
+    for (let i = 0; i < keys.length; i++) {
+      if (typeof values[i] === 'object') {
+        result[keys[i]] = clone(values[i]);
+      } else {
+        result[keys[i]] = values[i];
+      }
+    }
+  }
+  return result;
 };
